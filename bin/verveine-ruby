@@ -13,7 +13,9 @@ puts '('
 Dir.glob "#{root}/**/*.rb" do |f|
   files = files + 1
   logger.puts "parsing #{f}..."
-  YARD.parse f
+  logger.enter_level(Logger::ERROR) do
+    YARD.parse f
+  end
 
   YARD::Registry.all(:method).each do |m|
     famix_id = famix_id+1
@@ -24,4 +26,3 @@ end
 puts ')'
 
 logger.puts "Phew, done! #{famix_id} methods in #{files} files"
-
